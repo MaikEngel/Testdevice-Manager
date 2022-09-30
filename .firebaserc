@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "equipment-management-3d1ad": {
+      "hosting": {
+        "equipment_management": [
+          "equipment-management-3d1ad"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "equipment-management-3d1ad"
+  }
+}

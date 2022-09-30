@@ -14,6 +14,7 @@ export class EmployeesService {
     {'name': 'Benedikt Huss', 'password': '4321'}, 
   ]
 
+  user: string = "";
 
   constructor() { }
 }

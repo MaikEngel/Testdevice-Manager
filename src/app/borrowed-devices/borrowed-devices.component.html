@@ -1,0 +1,10 @@
+<table>
+    <tr>
+        <th>Ausgeliehen von...</th>
+        <th>Gerät</th>
+    </tr>
+    <tr *ngFor="let b of devicelist.borrowed">
+        <td>{{b.name}}</td>
+        <td>{{b.device}}</td>
+    </tr>
+</table>

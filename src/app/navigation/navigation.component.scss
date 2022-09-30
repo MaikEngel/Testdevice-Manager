@@ -1,0 +1,23 @@
+.navigation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+
+    span {
+        cursor: pointer;
+    }
+
+    a {
+        text-decoration: none;
+        margin-left: 16px;
+        color: black;
+        cursor: pointer;
+
+        &:hover {
+            color: #566872;
+        }
+    }
+}

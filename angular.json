@@ -102,6 +102,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "equipment_management:build:production",
+            "firebaseProject": "equipment-management-3d1ad",
+            "firebaseHostingSite": "equipment-management-3d1ad"
+          }
         }
       }
     }

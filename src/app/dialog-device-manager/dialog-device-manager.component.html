@@ -23,16 +23,16 @@
             <p>Aufgabe:</p>
             <mat-form-field appearance="fill">
                 <mat-label>Aufgabe auswählen</mat-label>
-                <mat-select>
-                    <mat-option value="option1">Implementierung</mat-option>
-                    <mat-option value="option2">Tests</mat-option>
-                    <mat-option value="option3">Präsentation</mat-option>
+                <mat-select [(ngModel)]="task">
+                    <mat-option value="Implementierung">Implementierung</mat-option>
+                    <mat-option value="Tests">Tests</mat-option>
+                    <mat-option value="Präsentation">Präsentation</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
     </mat-card-content>
     <mat-card-actions>
         <button mat-raised-button color="primary" (click)="changeDeviceName()">Speichern</button>
-        <button mat-raised-button color="primary">Ausleihen</button>
+        <button mat-raised-button color="primary" (click)="borrow()">Ausleihen</button>
     </mat-card-actions>
 </mat-card>

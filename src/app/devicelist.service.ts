@@ -7,5 +7,7 @@ export class DevicelistService {
 
   devices: string[] = ['IPhone 6', 'IPhone 8', 'MAC', 'PC', 'Samsung Galaxy S8']
 
+  borrowed: any[] = []
+
   constructor() { }
 }

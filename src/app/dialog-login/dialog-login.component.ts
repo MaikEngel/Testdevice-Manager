@@ -44,14 +44,18 @@ export class DialogLoginComponent implements OnInit {
     this.employees.employees.forEach(employee => {
       if (employee.name === this.name && employee.password === this.pass) {
         this.router.navigateByUrl('/employees')
+        this.employees.user = this.name;
       }
     });
 
     this.employees.manager.forEach(manager => {
       if (manager.name === this.name && manager.password === this.pass) {
         this.router.navigateByUrl('/device-manager')
+        this.employees.user = this.name;
       }
     });
+
+    console.log(this.employees.user);
   }
 
 }
