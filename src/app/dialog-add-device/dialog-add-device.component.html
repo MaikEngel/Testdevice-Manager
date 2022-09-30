@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Gerät hinzufügen</h1>
+<div mat-dialog-content>
+    Geräte Namen einfügen
+</div>
+<mat-form-field class="example-full-width" appearance="fill">
+    <mat-label></mat-label>
+    <input [(ngModel)]="deviceName" matInput placeholder="Beispiel: IPhone 14">
+</mat-form-field>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Abbrechen</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="addDevice()">Hinzufügen</button>
+</div>

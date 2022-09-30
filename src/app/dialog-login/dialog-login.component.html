@@ -4,13 +4,13 @@
             <form class="example-form">
                 <mat-form-field class="example-full-width" appearance="fill">
                     <mat-label>Username</mat-label>
-                    <input matInput placeholder="pat@example.com" [formControl]="username" required>
+                    <input matInput placeholder="Max Mustermann" [(ngModel)]="name" [formControl]="username" required>
                     <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill">
                     <mat-label>Enter your password</mat-label>
-                    <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
+                    <input matInput [(ngModel)]="pass" [type]="hide ? 'password' : 'text'" [formControl]="password" required>
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                         [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>

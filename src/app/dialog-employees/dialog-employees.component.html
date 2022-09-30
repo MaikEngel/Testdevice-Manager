@@ -3,14 +3,25 @@
     <mat-card-content>
         <div>
             <mat-form-field appearance="fill">
-                <mat-label>Choose an option</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let device of devicelist.devices" value="option1">{{device}}</mat-option>
+                <mat-label>Deviceliste</mat-label>
+                <mat-select [(ngModel)]="selectedDevice">
+                    <mat-option *ngFor="let device of devicelist.devices" value="{{device}}">{{device}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
         <div>
-            
+            <p>Devicename:</p>
+            <p>{{selectedDevice}}</p>
+
+            <p>Aufgabe:</p>
+            <mat-form-field appearance="fill">
+                <mat-label>Aufgabe auswählen</mat-label>
+                <mat-select>
+                    <mat-option value="option1">Implementierung</mat-option>
+                    <mat-option value="option2">Tests</mat-option>
+                    <mat-option value="option3">Präsentation</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
     </mat-card-content>
     <mat-card-actions>

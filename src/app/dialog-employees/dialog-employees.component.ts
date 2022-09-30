@@ -8,6 +8,8 @@ import { DevicelistService } from '../devicelist.service';
 })
 export class DialogEmployeesComponent implements OnInit {
 
+  selectedDevice: string = "-";
+
   constructor(public devicelist: DevicelistService) { }
 
   ngOnInit(): void {

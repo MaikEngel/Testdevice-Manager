@@ -1,1 +1,38 @@
-<p>dialog-device-manager works!</p>
+<mat-card class="example-card dialog">
+    <mat-card-title>Testdevice Manager - Mitarbeiter</mat-card-title>
+    <mat-card-content>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Deviceliste</mat-label>
+                <mat-select [(ngModel)]="selectedDevice">
+                    <mat-option *ngFor="let device of devicelist.devices" value="{{device}}">{{device}}</mat-option>
+                    <mat-option (click)="openDialog('0ms', '0ms')">
+                        <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+                        <b>Gerät hinzufügen</b>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-fab color="primary" (click)="deleteDevice()">
+                <mat-icon aria-hidden="false" fontIcon="delete"></mat-icon>
+            </button>
+        </div>
+        <div>
+            <p>Devicename:</p>
+            <input type="text" [(ngModel)]="newName" value="{{selectedDevice}}">
+
+            <p>Aufgabe:</p>
+            <mat-form-field appearance="fill">
+                <mat-label>Aufgabe auswählen</mat-label>
+                <mat-select>
+                    <mat-option value="option1">Implementierung</mat-option>
+                    <mat-option value="option2">Tests</mat-option>
+                    <mat-option value="option3">Präsentation</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="changeDeviceName()">Speichern</button>
+        <button mat-raised-button color="primary">Ausleihen</button>
+    </mat-card-actions>
+</mat-card>

@@ -14,7 +14,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogAddDeviceComponent } from './dialog-add-device/dialog-add-device.component';
+
 
 
 @NgModule({
@@ -23,6 +26,7 @@ import {MatSelectModule} from '@angular/material/select';
     DialogLoginComponent,
     DialogEmployeesComponent,
     DialogDeviceManagerComponent,
+    DialogAddDeviceComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
