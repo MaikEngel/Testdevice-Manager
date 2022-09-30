@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DevicelistService } from '../devicelist.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddDeviceComponent } from '../dialog-add-device/dialog-add-device.component';
-import { Firestore, collectionData, collection } from '@angular/fire/firestore';
+import { Firestore, collection } from '@angular/fire/firestore';
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { EmployeesService } from '../employees.service';
 
@@ -37,9 +37,11 @@ export class DialogDeviceManagerComponent implements OnInit {
   }
 
   changeDeviceName() {
-    let index = this.devicelist.devices.indexOf(this.selectedDevice)
-    this.devicelist.devices[index] = this.newName;
-    this.updateFirestore();
+    if (this.employees.user) {
+      let index = this.devicelist.devices.indexOf(this.selectedDevice)
+      this.devicelist.devices[index] = this.newName;
+      this.updateFirestore();
+    }
   }
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
@@ -51,37 +53,31 @@ export class DialogDeviceManagerComponent implements OnInit {
   }
 
   deleteDevice() {
-    let index = this.devicelist.devices.indexOf(this.selectedDevice)
-    if (index >= 0) {
-      this.devicelist.devices.splice(index, 1);
-      this.selectedDevice = "";
+    if (this.employees.user) {
+      let index = this.devicelist.devices.indexOf(this.selectedDevice)
+      if (index >= 0) {
+        this.devicelist.devices.splice(index, 1);
+        this.selectedDevice = "";
+      }
+      this.updateFirestore();
     }
-    this.updateFirestore();
   }
 
   borrow() {
-    this.devicelist.borrowed.push({ name: this.employees.user, device: this.selectedDevice, task: this.task });
-    this.deleteDevice();
-    this.updateFirestore();
-  }
+    if (this.employees.user) {
 
-  async downloadFirebase() {
-    const borrowedRef = doc(this.firestore, "devicelist", "borrowed");
-    const deviceRef = doc(this.firestore, "devicelist", "borrowed");
-
-    const borrowedSnap = await getDoc(borrowedRef);
-    const docSnap = await getDoc(deviceRef);
-
-
-    if (borrowedSnap.exists()) {
-      this.devicelist.borrowed = borrowedSnap.data()['borrowed'];
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
+      this.devicelist.borrowed.push({ name: this.employees.user, device: this.selectedDevice, task: this.task });
+      this.deleteDevice();
+      this.updateFirestore();
     }
   }
 
-  async downloadBorrowed(){
+  downloadFirebase() {
+    this.downloadBorrowed();
+    this.downloadDevices();
+  }
+
+  async downloadBorrowed() {
     const borrowedRef = doc(this.firestore, "devicelist", "borrowed");
     const borrowedSnap = await getDoc(borrowedRef);
 
@@ -93,13 +89,13 @@ export class DialogDeviceManagerComponent implements OnInit {
     }
   }
 
-  async downloadDevices(){
-    const deviceRef = doc(this.firestore, "devicelist", "borrowed");
+  async downloadDevices() {
+    const deviceRef = doc(this.firestore, "devicelist", "devices");
 
     const deviceSnap = await getDoc(deviceRef);
 
     if (deviceSnap.exists()) {
-      this.devicelist.devices = deviceSnap.data()['borrowed'];
+      this.devicelist.devices = deviceSnap.data()['devices'];
     } else {
       // doc.data() will be undefined in this case
       console.log("No such document!");

@@ -36,3 +36,9 @@
         <button mat-raised-button color="primary" (click)="borrow()">Ausleihen</button>
     </mat-card-actions>
 </mat-card>
+
+<p [className]="this.employees.user ? 'dNone' : 'dBlock'">
+    <ngb-alert [dismissible]="false">
+        <strong>Warnung!</strong> Du bist nicht eingeloggt
+    </ngb-alert>
+</p>

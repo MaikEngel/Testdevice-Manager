@@ -2,9 +2,20 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    gap: 32px;
 
     div {
         width: 50%;
         height: 200px;
+        display: flex;
+        flex-direction: column;
     }
+}
+
+.dNone{
+    display: none;
+}
+
+.dBlock{
+    display: block;
 }

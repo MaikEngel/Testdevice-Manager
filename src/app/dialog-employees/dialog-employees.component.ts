@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DevicelistService } from '../devicelist.service';
 import { EmployeesService } from '../employees.service';
-import { Firestore, collectionData, collection } from '@angular/fire/firestore';
-import { doc, setDoc } from "firebase/firestore";
+import { Firestore } from '@angular/fire/firestore';
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 @Component({
   selector: 'app-dialog-employees',
@@ -17,8 +17,39 @@ export class DialogEmployeesComponent implements OnInit {
 
   constructor(public devicelist: DevicelistService, public dialog: MatDialog, public firestore: Firestore, public employees: EmployeesService) { }
 
+
   ngOnInit(): void {
-    this.updateFirestore()
+    this.downloadFirebase();
+  }
+
+  downloadFirebase() {
+    this.downloadBorrowed();
+    this.downloadDevices();
+  }
+
+  async downloadBorrowed() {
+    const borrowedRef = doc(this.firestore, "devicelist", "borrowed");
+    const borrowedSnap = await getDoc(borrowedRef);
+
+    if (borrowedSnap.exists()) {
+      this.devicelist.borrowed = borrowedSnap.data()['borrowed'];
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }
+
+  async downloadDevices() {
+    const deviceRef = doc(this.firestore, "devicelist", "devices");
+
+    const deviceSnap = await getDoc(deviceRef);
+
+    if (deviceSnap.exists()) {
+      this.devicelist.devices = deviceSnap.data()['devices'];
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
   }
 
   async updateFirestore() {
@@ -31,13 +62,15 @@ export class DialogEmployeesComponent implements OnInit {
   }
 
   borrow() {
-    this.devicelist.borrowed.push({ name: this.employees.user, device: this.selectedDevice, task: this.task });
-    let index = this.devicelist.devices.indexOf(this.selectedDevice)
-    if (index >= 0) {
-      this.devicelist.devices.splice(index, 1);
-      this.selectedDevice = "";
+    if (this.employees.user) {
+      this.devicelist.borrowed.push({ name: this.employees.user, device: this.selectedDevice, task: this.task });
+      let index = this.devicelist.devices.indexOf(this.selectedDevice)
+      if (index >= 0) {
+        this.devicelist.devices.splice(index, 1);
+        this.selectedDevice = "";
+      }
+      this.updateFirestore()
     }
-    this.updateFirestore()
   }
 
 }
