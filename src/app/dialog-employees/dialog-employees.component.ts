@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DevicelistService } from '../devicelist.service';
 
 @Component({
   selector: 'app-dialog-employees',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DialogEmployeesComponent implements OnInit {
 
-  constructor() { }
+  constructor(public devicelist: DevicelistService) { }
 
   ngOnInit(): void {
   }

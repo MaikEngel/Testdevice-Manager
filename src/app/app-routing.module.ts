@@ -4,6 +4,7 @@ import { DialogDeviceManagerComponent } from './dialog-device-manager/dialog-dev
 import { DialogEmployeesComponent } from './dialog-employees/dialog-employees.component';
 import { DialogLoginComponent } from './dialog-login/dialog-login.component';
 
+
 const routes: Routes = [
   { path: '', component: DialogLoginComponent},
   { path: 'employees', component: DialogEmployeesComponent},
