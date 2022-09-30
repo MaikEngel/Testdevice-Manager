@@ -3,7 +3,7 @@ import { DevicelistService } from '../devicelist.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddDeviceComponent } from '../dialog-add-device/dialog-add-device.component';
 import { Firestore, collectionData, collection } from '@angular/fire/firestore';
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { EmployeesService } from '../employees.service';
 
 
@@ -24,18 +24,22 @@ export class DialogDeviceManagerComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    this.downloadFirebase();
   }
 
-  async test() {
+  async updateFirestore() {
+    await setDoc(doc(this.firestore, "devicelist", "borrowed"), {
+      borrowed: this.devicelist.borrowed,
+    });
     await setDoc(doc(this.firestore, "devicelist", "devices"), {
-      borrowed: this.devicelist.devices,
+      devices: this.devicelist.devices,
     });
   }
 
   changeDeviceName() {
     let index = this.devicelist.devices.indexOf(this.selectedDevice)
     this.devicelist.devices[index] = this.newName;
+    this.updateFirestore();
   }
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
@@ -52,12 +56,53 @@ export class DialogDeviceManagerComponent implements OnInit {
       this.devicelist.devices.splice(index, 1);
       this.selectedDevice = "";
     }
+    this.updateFirestore();
   }
 
   borrow() {
-    this.devicelist.borrowed.push({ name: this.employees.user, device: this.selectedDevice, task: this.task })
-    console.log(this.devicelist.borrowed);
-    
+    this.devicelist.borrowed.push({ name: this.employees.user, device: this.selectedDevice, task: this.task });
+    this.deleteDevice();
+    this.updateFirestore();
   }
 
+  async downloadFirebase() {
+    const borrowedRef = doc(this.firestore, "devicelist", "borrowed");
+    const deviceRef = doc(this.firestore, "devicelist", "borrowed");
+
+    const borrowedSnap = await getDoc(borrowedRef);
+    const docSnap = await getDoc(deviceRef);
+
+
+    if (borrowedSnap.exists()) {
+      this.devicelist.borrowed = borrowedSnap.data()['borrowed'];
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }
+
+  async downloadBorrowed(){
+    const borrowedRef = doc(this.firestore, "devicelist", "borrowed");
+    const borrowedSnap = await getDoc(borrowedRef);
+
+    if (borrowedSnap.exists()) {
+      this.devicelist.borrowed = borrowedSnap.data()['borrowed'];
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }
+
+  async downloadDevices(){
+    const deviceRef = doc(this.firestore, "devicelist", "borrowed");
+
+    const deviceSnap = await getDoc(deviceRef);
+
+    if (deviceSnap.exists()) {
+      this.devicelist.devices = deviceSnap.data()['borrowed'];
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }
 }
